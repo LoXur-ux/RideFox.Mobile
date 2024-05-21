@@ -1,13 +1,34 @@
 import React from "react";
 import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import styled from "styled-components/native";
+import INavButtonProp from "../../types/properies/INavButtonProp";
 
-const icons = [
-  require("../../assets/icons/navbar/Notifications.png"),
-  require("../../assets/icons/navbar/History.png"),
-  require("../../assets/icons/navbar/QR.png"),
-  require("../../assets/icons/navbar/Scooter.png"),
-  require("../../assets/icons/navbar/Profile.png"),
+const buttons: INavButtonProp[] = [
+  {
+    imageSource: require("../../assets/icons/navbar/Notifications.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/History.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/QR.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/Scooter.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/Profile.png"),
+    onPress: () => {},
+    selected: false,
+  },
 ];
 
 const Navbar: React.FC = () => {
@@ -17,9 +38,9 @@ const Navbar: React.FC = () => {
 
   return (
     <NavbarContainer>
-      {icons.map((icon, index) => (
+      {buttons.map((button, index) => (
         <NavButton key={index} onPress={() => handlePress(index + 1)}>
-          <NavIcon source={icon} />
+          <NavIcon source={button.imageSource} />
         </NavButton>
       ))}
     </NavbarContainer>
@@ -30,8 +51,9 @@ const NavbarContainer = styled.View`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  height: 60px;
-  background-color: #333;
+  vertical-align: middle;
+  height: auto;
+  background-color: #ffa42d;
 `;
 
 const NavButton = styled.TouchableOpacity`
@@ -42,8 +64,8 @@ const NavButton = styled.TouchableOpacity`
 `;
 
 const NavIcon = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 export default Navbar;
