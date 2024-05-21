@@ -1,22 +1,29 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 import Navbar from "./src/components/Navbar";
-import { BottomNavigation } from "react-native-material-ui";
+import { styled } from "styled-components/native";
+
+// CSS
+const Container = styled.View`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+`;
 
 export default function App() {
+  // TS Code
+
+  // UI
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+    <View>
+      <Container>
+        <View />
+        <Navbar />
+      </Container>
       <StatusBar style="auto" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

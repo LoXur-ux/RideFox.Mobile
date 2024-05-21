@@ -1,23 +1,71 @@
-import React, { useState } from "react";
-import { View } from "react-native";
-import NavButton from "../ui/NavButton";
+import React from "react";
+import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import styled from "styled-components/native";
+import INavButtonProp from "../../types/properies/INavButtonProp";
 
-const NavbarView = styled.View`
-  display: flex;
-  width: 10%;
-`;
+const buttons: INavButtonProp[] = [
+  {
+    imageSource: require("../../assets/icons/navbar/Notifications.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/History.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/QR.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/Scooter.png"),
+    onPress: () => {},
+    selected: false,
+  },
+  {
+    imageSource: require("../../assets/icons/navbar/Profile.png"),
+    onPress: () => {},
+    selected: false,
+  },
+];
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
+  const handlePress = (buttonIndex: number) => {
+    console.log(`Button ${buttonIndex} pressed`);
+  };
+
   return (
-    <NavbarView>
-      <NavButton imageSource="" onPress={() => {}} selected />
-      <NavButton imageSource="" onPress={() => {}} selected />
-      <NavButton imageSource="" onPress={() => {}} selected />
-      <NavButton imageSource="" onPress={() => {}} selected />
-      <NavButton imageSource="" onPress={() => {}} selected />
-    </NavbarView>
+    <NavbarContainer>
+      {buttons.map((button, index) => (
+        <NavButton key={index} onPress={() => handlePress(index + 1)}>
+          <NavIcon source={button.imageSource} />
+        </NavButton>
+      ))}
+    </NavbarContainer>
   );
 };
+
+const NavbarContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  vertical-align: middle;
+  height: auto;
+  background-color: #ffa42d;
+`;
+
+const NavButton = styled.TouchableOpacity`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+`;
+
+const NavIcon = styled.Image`
+  width: 40px;
+  height: 40px;
+`;
 
 export default Navbar;
