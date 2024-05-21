@@ -1,7 +1,12 @@
 import React from "react";
+import { Text, View } from "react-native";
 
 const Notifications: React.FC = () => {
-  return <div>Notifications</div>;
+  return (
+    <View>
+      <Text>Notifications</Text>
+    </View>
+  );
 };
 
 export default Notifications;

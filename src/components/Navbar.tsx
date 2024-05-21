@@ -1,7 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
 import styled from "styled-components/native";
-import INavButtonProp from "../../types/properies/INavButtonProp";
+import INavButtonProp from "../../types/properties/INavButtonProp";
 
 const buttons: INavButtonProp[] = [
   {

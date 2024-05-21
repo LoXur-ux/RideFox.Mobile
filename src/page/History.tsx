@@ -1,7 +1,13 @@
 import React from "react";
+import { View, Text } from "react-native";
 
 const History: React.FC = () => {
-  return <div>History</div>;
+
+  return (
+    <View>
+      <Text>Dfib edtljvktybz</Text>
+    </View>
+  );
 };
 
 export default History;
