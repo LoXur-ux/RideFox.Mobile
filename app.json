@@ -16,7 +16,11 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.FLASHLIGHT"
+      ]
     }
   }
 }
