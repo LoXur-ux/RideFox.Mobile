@@ -1,11 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/Store";
 
 const History: React.FC = () => {
-
   return (
     <View>
-      <Text>Dfib edtljvktybz</Text>
+      <Text>History</Text>
     </View>
   );
 };
