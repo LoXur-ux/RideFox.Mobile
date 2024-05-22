@@ -36,10 +36,15 @@ const Container = styled.View`
 `;
 
 const Card = styled.TouchableOpacity`
-  background-color: #ffa42d;
-  padding: 16px;
-  border-radius: 8px;
-  elevation: 1;
+    background-color: #FFA42D;
+    padding: 16px;
+    margin-vertical: 8px;
+    border-radius: 8px;
+    shadow-color: #000;
+    shadow-opacity: 0.1;
+    shadow-radius: 8px;
+    elevation: 1;
+
 `;
 
 const Title = styled.Text`
