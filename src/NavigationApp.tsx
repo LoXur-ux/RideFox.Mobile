@@ -1,9 +1,9 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/Store";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import styled from "styled-components/native";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/Store";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Navbar from "./components/Navbar";
 import Profile from "./page/Profile";
 import Notifications from "./page/Notifications";
@@ -53,6 +53,7 @@ const NavigationApp: React.FC = () => {
     </Container>
   );
 };
+
 // CSS
 const Container = styled.View`
   height: 100%;
