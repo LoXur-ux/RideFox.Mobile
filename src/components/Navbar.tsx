@@ -1,44 +1,61 @@
 import React from "react";
 import styled from "styled-components/native";
 import INavButtonProp from "../../types/properties/INavButtonProp";
-
-const buttons: INavButtonProp[] = [
-  {
-    imageSource: require("../../assets/icons/navbar/Notifications.png"),
-    onPress: () => {},
-    selected: false,
-  },
-  {
-    imageSource: require("../../assets/icons/navbar/History.png"),
-    onPress: () => {},
-    selected: false,
-  },
-  {
-    imageSource: require("../../assets/icons/navbar/QR.png"),
-    onPress: () => {},
-    selected: false,
-  },
-  {
-    imageSource: require("../../assets/icons/navbar/Scooter.png"),
-    onPress: () => {},
-    selected: false,
-  },
-  {
-    imageSource: require("../../assets/icons/navbar/Profile.png"),
-    onPress: () => {},
-    selected: false,
-  },
-];
+import { useDispatch } from "react-redux";
+import { setPage } from "../../redux/slices/navigationSlice";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 
 const Navbar: React.FC = () => {
-  const handlePress = (buttonIndex: number) => {
-    console.log(`Button ${buttonIndex} pressed`);
-  };
+  const dispatch = useDispatch();
+  const navigator = useNavigation();
+
+  const buttons: INavButtonProp[] = [
+    {
+      imageSource: require("../../assets/icons/navbar/Notifications.png"),
+      onPress: () => {
+        dispatch(setPage("notification"));
+        navigator.dispatch(CommonActions.navigate({ name: "notification" }));
+      },
+      selected: false,
+    },
+    {
+      imageSource: require("../../assets/icons/navbar/History.png"),
+      onPress: () => {
+        dispatch(setPage("history"));
+        navigator.dispatch(CommonActions.navigate({ name: "history" }));
+      },
+      selected: false,
+    },
+    {
+      imageSource: require("../../assets/icons/navbar/QR.png"),
+      onPress: () => {
+        dispatch(setPage("qr"));
+        navigator.dispatch(CommonActions.navigate({ name: "qr" }));
+      },
+      selected: false,
+    },
+    {
+      imageSource: require("../../assets/icons/navbar/Scooter.png"),
+      onPress: () => {
+        dispatch(setPage("map"));
+        navigator.dispatch(CommonActions.navigate({ name: "map" }));
+      },
+      selected: false,
+    },
+    {
+      imageSource: require("../../assets/icons/navbar/Profile.png"),
+      onPress: () => {
+        dispatch(setPage("profile"));
+        navigator.dispatch(CommonActions.navigate({ name: "profile" }));
+      },
+      selected: false,
+    },
+  ];
 
   return (
     <NavbarContainer>
       {buttons.map((button, index) => (
-        <NavButton key={index} onPress={() => handlePress(index + 1)}>
+        <NavButton key={index} onPress={button.onPress}>
           <NavIcon source={button.imageSource} />
         </NavButton>
       ))}
