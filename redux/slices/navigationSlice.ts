@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface NavigationState {
+interface INavigationState {
   currentPage: string;
 }
 
-const initialState: NavigationState = {
+const initialState: INavigationState = {
   currentPage: "qr",
 };
 
@@ -19,5 +19,4 @@ const navigationSlice = createSlice({
 });
 
 export const { setPage } = navigationSlice.actions;
-
 export default navigationSlice.reducer;

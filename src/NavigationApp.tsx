@@ -10,10 +10,15 @@ import Notifications from "./page/Notifications";
 import QR from "./page/QR";
 import Map from "./page/Map";
 import History from "./page/History";
+import ScooterMap from "./page/ScooterMap";
 
 const Stack = createNativeStackNavigator();
 
 const NavigationApp: React.FC = () => {
+  const selectedScooter = useSelector(
+    (state: RootState) => state.scooter.selectedScooter
+  );
+
   const currentPage = useSelector(
     (state: RootState) => state.navigation.currentPage
   );
@@ -40,7 +45,7 @@ const NavigationApp: React.FC = () => {
           <Stack.Screen
             options={{ headerShown: false }}
             name="map"
-            component={Map}
+            component={selectedScooter ? ScooterMap : Map}
           />
           <Stack.Screen
             options={{ headerShown: false }}

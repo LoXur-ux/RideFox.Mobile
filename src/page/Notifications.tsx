@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, FlatList } from "react-native";
 import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import NotificationModal from "../components/NotificationModal";
+import INotifications from "../../types/model/INotificationModel";
 
 const notifications = [
   {
@@ -29,38 +30,27 @@ const notifications = [
   },
 ];
 
-const Container = styled.View`
-  flex: 1;
-  padding: 16px;
-  background-color: #f9f9f9;
-`;
+interface INotificationCard {
+  notification: INotifications;
+  onPress: () => void;
+}
 
-const Card = styled.TouchableOpacity`
-    background-color: #FFA42D;
-    padding: 16px;
-    margin-vertical: 8px;
-    border-radius: 8px;
-    shadow-color: #000;
-    shadow-opacity: 0.1;
-    shadow-radius: 8px;
-    elevation: 1;
-
-`;
-
-const Title = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 8px;
-`;
-
-const NotificationCard = ({ title, shortContent, date, onPress }) => {
-  const formattedDate = format(new Date(date), "dd.MM.yyyy", { locale: ru });
-  const formattedTime = format(new Date(date), "HH:mm", { locale: ru });
+const NotificationCard: React.FC<INotificationCard> = (props) => {
+  const formattedDate = format(
+    new Date(props.notification.date),
+    "dd.MM.yyyy",
+    {
+      locale: ru,
+    }
+  );
+  const formattedTime = format(new Date(props.notification.date), "HH:mm", {
+    locale: ru,
+  });
 
   return (
-    <Card onPress={onPress}>
-      <Title>{title}</Title>
-      <Text>{shortContent}</Text>
+    <Card onPress={props.onPress}>
+      <Title>{props.notification.title}</Title>
+      <Text>{props.notification.shortContent}</Text>
       <Text>
         {formattedDate} в {formattedTime}
       </Text>
@@ -69,10 +59,15 @@ const NotificationCard = ({ title, shortContent, date, onPress }) => {
 };
 
 const Notifications: React.FC = () => {
-  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [selectedNotification, setSelectedNotification] =
+    useState<INotifications>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handlePress = (notification) => {
+  useEffect(() => {
+    return () => {};
+  }, []);
+
+  const handlePress = (notification: INotifications) => {
     setSelectedNotification(notification);
     setModalVisible(true);
   };
@@ -89,9 +84,7 @@ const Notifications: React.FC = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <NotificationCard
-            title={item.title}
-            shortContent={item.shortContent}
-            date={item.date}
+            notification={item}
             onPress={() => handlePress(item)}
           />
         )}
@@ -106,3 +99,29 @@ const Notifications: React.FC = () => {
 };
 
 export default Notifications;
+
+//#region CSS
+const Container = styled.View`
+  flex: 1;
+  padding: 16px;
+  background-color: #f9f9f9;
+`;
+
+const Card = styled.TouchableOpacity`
+  background-color: #ffa42d;
+  padding: 16px;
+  margin-vertical: 8px;
+  border-radius: 8px;
+  shadow-color: #000;
+  shadow-opacity: 0.1;
+  shadow-radius: 8px;
+  elevation: 1;
+`;
+
+const Title = styled.Text`
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+`;
+
+//#endregion

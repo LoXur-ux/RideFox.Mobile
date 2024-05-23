@@ -1,9 +1,55 @@
 import React from "react";
 import { Modal } from "react-native";
-import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import styled from "styled-components/native";
 
+interface IHistModal {
+  visible: boolean;
+  onClose: () => void;
+  hist: IHistoryModel;
+}
+
+const HistoryModal: React.FC<IHistModal> = (props) => {
+  if (!props.hist) {
+    return null;
+  }
+
+  const formattedDate = format(new Date(props.hist.date), "dd.MM.yyyy", {
+    locale: ru,
+  });
+  const formattedTime = format(new Date(props.hist.date), "HH:mm", {
+    locale: ru,
+  });
+
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.visible}
+      onRequestClose={props.onClose}
+    >
+      <Container>
+        <ModalView>
+          <Title>{props.hist.title}</Title>
+          <Content>{props.hist.content}</Content>
+          <DateText>
+            {formattedDate} в {formattedTime}
+          </DateText>
+          <CostText>Стоимость: {props.hist.cost}₽</CostText>
+          <DistanceText>Расстояние: {props.hist.distance} км</DistanceText>
+          <CloseButton onPress={props.onClose}>
+            <CloseButtonText>Закрыть</CloseButtonText>
+          </CloseButton>
+        </ModalView>
+      </Container>
+    </Modal>
+  );
+};
+
+export default HistoryModal;
+
+//#region CSS
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -56,40 +102,4 @@ const CloseButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
-
-const HistoryModal = ({ visible, onClose, trip }) => {
-  if (!trip) {
-    return null;
-  }
-
-  const formattedDate = format(new Date(trip.date), "dd.MM.yyyy", {
-    locale: ru,
-  });
-  const formattedTime = format(new Date(trip.date), "HH:mm", { locale: ru });
-
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <Container>
-        <ModalView>
-          <Title>{trip.title}</Title>
-          <Content>{trip.fullContent}</Content>
-          <DateText>
-            {formattedDate} в {formattedTime}
-          </DateText>
-          <CostText>Стоимость: {trip.cost}</CostText>
-          <DistanceText>Расстояние: {trip.distance}</DistanceText>
-          <CloseButton onPress={onClose}>
-            <CloseButtonText>Закрыть</CloseButtonText>
-          </CloseButton>
-        </ModalView>
-      </Container>
-    </Modal>
-  );
-};
-
-export default HistoryModal;
+//#endregion
