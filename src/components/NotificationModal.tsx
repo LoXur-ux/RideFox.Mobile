@@ -3,7 +3,56 @@ import { Modal } from "react-native";
 import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
+import INotifications from "../../types/model/INotificationModel";
 
+interface INotificationModal {
+  visible: boolean;
+  onClose: () => void;
+  notification: INotifications;
+}
+
+const NotificationModal: React.FC<INotificationModal> = (props) => {
+  if (!props.notification) {
+    return null;
+  }
+
+  const formattedDate = format(
+    new Date(props.notification.date),
+    "dd.MM.yyyy",
+    {
+      locale: ru,
+    }
+  );
+  const formattedTime = format(new Date(props.notification.date), "HH:mm", {
+    locale: ru,
+  });
+
+  return (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={props.visible}
+      onRequestClose={props.onClose}
+    >
+      <Container>
+        <ModalView>
+          <Title>{props.notification.title}</Title>
+          <Content>{props.notification.fullContent}</Content>
+          <DateText>
+            {formattedDate} в {formattedTime}
+          </DateText>
+          <CloseButton onPress={props.onClose}>
+            <CloseButtonText>Закрыть</CloseButtonText>
+          </CloseButton>
+        </ModalView>
+      </Container>
+    </Modal>
+  );
+};
+
+export default NotificationModal;
+
+//#region CSS
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -46,40 +95,4 @@ const CloseButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
 `;
-
-const NotificationModal = ({ visible, onClose, notification }) => {
-  if (!notification) {
-    return null;
-  }
-
-  const formattedDate = format(new Date(notification.date), "dd.MM.yyyy", {
-    locale: ru,
-  });
-  const formattedTime = format(new Date(notification.date), "HH:mm", {
-    locale: ru,
-  });
-
-  return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
-    >
-      <Container>
-        <ModalView>
-          <Title>{notification.title}</Title>
-          <Content>{notification.fullContent}</Content>
-          <DateText>
-            {formattedDate} в {formattedTime}
-          </DateText>
-          <CloseButton onPress={onClose}>
-            <CloseButtonText>Закрыть</CloseButtonText>
-          </CloseButton>
-        </ModalView>
-      </Container>
-    </Modal>
-  );
-};
-
-export default NotificationModal;
+//#endregion

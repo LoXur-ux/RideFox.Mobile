@@ -1,12 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
-const QR: React.FC = () => {
-  return (
-    <View>
-      <Text>QR</Text>
-    </View>
-  );
+const QR = () => {
+  return <Text>QR</Text>;
 };
 
 export default QR;
