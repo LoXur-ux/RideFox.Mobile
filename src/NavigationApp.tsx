@@ -11,6 +11,9 @@ import QR from "./page/QR";
 import Map from "./page/Map";
 import History from "./page/History";
 import ScooterMap from "./page/ScooterMap";
+import Login from "./page/Login";
+import Registration from "./page/Registration";
+import { View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +22,8 @@ const NavigationApp: React.FC = () => {
     (state: RootState) => state.scooter.selectedScooter
   );
 
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+
   const currentPage = useSelector(
     (state: RootState) => state.navigation.currentPage
   );
@@ -26,34 +31,49 @@ const NavigationApp: React.FC = () => {
   return (
     <Container>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={currentPage}>
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="notification"
-            component={Notifications}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="history"
-            component={History}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="qr"
-            component={QR}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="map"
-            component={selectedScooter ? ScooterMap : Map}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="profile"
-            component={Profile}
-          />
-        </Stack.Navigator>
-        <Navbar />
+        {currentUser ? (
+          <Stack.Navigator initialRouteName={currentPage}>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="notification"
+              component={Notifications}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="history"
+              component={History}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="qr"
+              component={QR}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="map"
+              component={selectedScooter ? ScooterMap : Map}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="profile"
+              component={Profile}
+            />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="login"
+              component={Login}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="registration"
+              component={Registration}
+            />
+          </Stack.Navigator>
+        )}
+        {currentUser ? <Navbar /> : <View />}
       </NavigationContainer>
     </Container>
   );

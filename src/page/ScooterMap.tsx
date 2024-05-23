@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";
 import { clearSelection } from "../../redux/slices/scooterSlice";
+import { Map, YMaps } from "@pbe/react-yandex-maps";
 
 const MapContainer = styled.View`
   flex: 1;
@@ -30,10 +31,10 @@ const ScooterName = styled.Text`
   color: #333;
 `;
 
-const SpeedText = styled.Text`
+const InfoText = styled.Text`
   font-size: 16px;
   color: #666;
-  margin-top: 10px;
+  margin-top: 8px;
 `;
 
 const FinishTripButton = styled.TouchableOpacity`
@@ -47,6 +48,7 @@ const FinishTripButton = styled.TouchableOpacity`
 const ButtonText = styled.Text`
   color: #f9f9f9;
   font-size: 16px;
+  font-weight: bold;
 `;
 
 const ScooterMap = () => {
@@ -61,12 +63,16 @@ const ScooterMap = () => {
 
   return (
     <MapContainer>
-      {/* Заглушка для карты */}
+      <YMaps>
+        <Map defaultState={{ center: [55.751574, 37.573856], zoom: 9 }} />
+      </YMaps>
       <InfoContainer>
         {selectedScooter && (
           <>
             <ScooterName>{selectedScooter.name}</ScooterName>
-            <SpeedText>Скорость: 0 км/ч</SpeedText>
+            <InfoText>Скорость: 0 км/ч</InfoText>
+            <InfoText>Растояние: 0 км</InfoText>
+            <InfoText>Заряд: {selectedScooter.charge}%</InfoText>
             <FinishTripButton onPress={finishTrip}>
               <ButtonText>Закончить поездку</ButtonText>
             </FinishTripButton>
