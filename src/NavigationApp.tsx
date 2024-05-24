@@ -7,8 +7,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Navbar from "./components/Navbar";
 import Profile from "./page/Profile";
 import Notifications from "./page/Notifications";
-import QR from "./page/QR";
-import Map from "./page/Map";
+import QRScanner from "./page/QRScanner";
+import Scooter from "./page/Scooter";
 import History from "./page/History";
 import ScooterMap from "./page/ScooterMap";
 import Login from "./page/Login";
@@ -45,13 +45,13 @@ const NavigationApp: React.FC = () => {
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="qr"
-              component={QR}
+              name="scanner"
+              component={QRScanner}
             />
             <Stack.Screen
               options={{ headerShown: false }}
               name="map"
-              component={selectedScooter ? ScooterMap : Map}
+              component={selectedScooter ? ScooterMap : Scooter}
             />
             <Stack.Screen
               options={{ headerShown: false }}

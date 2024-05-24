@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";
 import { clearSelection } from "../../redux/slices/scooterSlice";
-import { Map, YMaps } from "@pbe/react-yandex-maps";
+//import { YandexMapKit, YandexMapView } from "react-native-yandexmapkit";
+import { YandexApiKey } from "../../settings.json";
+import { View } from "react-native";
+import YandexMap from "../components/YandexMap";
+// import {
+//   checkLocationPermission,
+//   requestLocationPermission,
+// } from "../../service/PermissionHelper";
 
 const MapContainer = styled.View`
   flex: 1;
@@ -56,16 +63,14 @@ const ScooterMap = () => {
   const selectedScooter = useSelector(
     (state: RootState) => state.scooter.selectedScooter
   );
+  const [gpsPermission, setGpsPermission] = useState(false);
 
   const finishTrip = () => {
     dispatch(clearSelection());
   };
-
   return (
     <MapContainer>
-      <YMaps>
-        <Map defaultState={{ center: [55.751574, 37.573856], zoom: 9 }} />
-      </YMaps>
+      {/* <YandexMap points={[]} /> */}
       <InfoContainer>
         {selectedScooter && (
           <>
