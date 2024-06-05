@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import {
   nextStep,
   setLoginDetails,
-} from "../../../redux/slices/registrationSlice";
+} from "../../redux/slices/registrationSlice";
 import Logo from "../Logo";
-import { setPage } from "../../../redux/slices/navigationSlice";
+import { setPage } from "../../redux/slices/navigationSlice";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 
 const Container = styled.View`

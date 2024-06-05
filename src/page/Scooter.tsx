@@ -3,11 +3,11 @@ import axios from "axios";
 import { FlatList } from "react-native";
 import styled from "styled-components/native";
 import { useDispatch } from "react-redux";
-import IScooterModel from "../../types/model/IScooterModel";
-import ScooterStatus from "../../types/enum/ScooterStatuses";
+import IScooterModel from "../types/model/IScooterModel";
+import ScooterStatus from "../types/enum/ScooterStatuses";
 import ScooterModal from "../components/ScooterModal";
-import { selectScooter } from "../../redux/slices/scooterSlice";
-import serverURI from "./../../settings.json";
+import { selectScooter } from "../redux/slices/scooterSlice";
+import { uri } from "./../../settings.json";
 
 const scootersDef: IScooterModel[] = [
   { id: "1", name: "Scooter 1", charge: 80, status: ScooterStatus.Free },
@@ -21,8 +21,10 @@ const Scooter: React.FC = () => {
   const [scooters, setScooter] = useState<IScooterModel[]>([]);
   useEffect(() => {
     axios
-      .get<IScooterModel[]>(serverURI + "scooter/get-all")
+      .get<IScooterModel[]>(uri + "scooter/get-all")
       .then((res) => {
+        console.log(res.data);
+
         setScooter((prev) => (prev = res.data));
       })
       .catch((err) => {

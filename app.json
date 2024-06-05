@@ -9,6 +9,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "proxy": "https://localhost:7039",
     "assetBundlePatterns": ["**/*"],
     "android": {
       "adaptiveIcon": {
@@ -22,7 +23,6 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.LoXur.RideFox.Mobile"
-    },
-    "plugins": ["expo-camera"]
+    }
   }
 }

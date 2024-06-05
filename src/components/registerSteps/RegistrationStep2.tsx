@@ -5,7 +5,7 @@ import {
   nextStep,
   previousStep,
   setPersonalDetails,
-} from "../../../redux/slices/registrationSlice";
+} from "../../redux/slices/registrationSlice";
 import Logo from "../Logo";
 
 const Container = styled.View`

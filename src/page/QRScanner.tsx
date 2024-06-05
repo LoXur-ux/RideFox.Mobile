@@ -1,9 +1,80 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Alert, Text, Button } from "react-native";
-import { RNCamera } from "react-native-camera";
+import { Alert, PermissionsAndroid } from "react-native";
 import styled from "styled-components/native";
-//import { request, PERMISSIONS } from "react-native-permissions";
-import Modal from "react-native-modal";
+import { uri } from "../../settings.json";
+import IScooterModel from "../types/model/IScooterModel";
+
+const QRCodeScannerComponent = () => {
+  const [scanned, setScanned] = useState(false);
+  useEffect(() => {
+    //requestCameraPermission();
+    // fetch("https://mysafeinfo.com/api/data?list=englishmonarchs&format=json")
+    //   .then((res) => console.log("Json: " + res.json))
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err))
+    //   .finally(() => console.log("finally"));
+    axios
+      .get<IScooterModel[]>(uri + "scooter/get-all")
+      .then((res) => console.log(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Разрешение на использование камеры",
+          message:
+            "Для сканирования QR-кодов нам нужно ваше разрешение на использование камеры.",
+          buttonNeutral: "Спросить позже",
+          buttonNegative: "Отмена",
+          buttonPositive: "ОК",
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("Разрешение на использование камеры получено");
+      } else {
+        console.log("Отказано в разрешении на использование камеры");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
+  const handleBarCodeScanned = ({ data }) => {
+    setScanned(true);
+    Alert.alert("QR-код отсканирован", `Данные: ${data}`, [
+      { text: "OK", onPress: () => setScanned(false) },
+    ]);
+  };
+
+  return (
+    <Container>
+      {/* <QRCodeScanner
+        onRead={handleBarCodeScanned}
+        showMarker={true}
+        customMarker={<Marker />}
+        reactivate={true}
+        reactivateTimeout={2000}
+      /> */}
+      {scanned && (
+        <Overlay>
+          <OverlayText>
+            Сканирование завершено! Пожалуйста, отсканируйте новый QR-код.
+          </OverlayText>
+        </Overlay>
+      )}
+    </Container>
+  );
+};
+
+export default QRCodeScannerComponent;
+
+//#region CSS
 
 const Container = styled.View`
   flex: 1;
@@ -11,103 +82,26 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const CameraView = styled(RNCamera)`
-  flex: 1;
-  width: 100%;
+const Marker = styled.View`
+  border-width: 2px;
+  border-color: #ffa42d;
 `;
 
-const ScanButton = styled(Button)`
-  margin-top: 20px;
-`;
-
-const ModalContainer = styled.View`
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+const Overlay = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  justify-content: center;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.5);
 `;
 
-const ModalText = styled.Text`
-  margin-bottom: 15px;
-  text-align: center;
+const OverlayText = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 `;
 
-const ModalButton = styled.Button`
-  margin-top: 10px;
-`;
-
-const QRScanner = () => {
-  const [hasCameraPermission, setHasCameraPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [scooterData, setScooterData] = useState(null);
-
-  // useEffect(() => {
-  //   requestCameraPermission();
-  // }, []);
-
-  // const requestCameraPermission = async () => {
-  //   const result = await request(PERMISSIONS.ANDROID.CAMERA);
-  //   setHasCameraPermission(result === "granted");
-  // };
-
-  const handleBarCodeScanned = ({ type, data }) => {
-    if (!scanned) {
-      setScanned(true);
-      // Здесь можно добавить логику для проверки соответствия QR-кода и получения информации о самокате
-      setScooterData({ id: data, model: "Scooter Model X", battery: "85%" }); // Заглушка данных самоката
-      setIsModalVisible(true);
-    }
-  };
-
-  const confirmRental = () => {
-    // Логика для подтверждения аренды
-    console.log(`Rental confirmed for scooter ID: ${scooterData.id}`);
-    setIsModalVisible(false);
-    setScanned(false);
-  };
-
-  if (hasCameraPermission === null) {
-    return (
-      <Container>
-        <Text>Requesting for camera permission</Text>
-      </Container>
-    );
-  }
-  if (hasCameraPermission === false) {
-    return (
-      <Container>
-        <Text>No access to camera</Text>
-      </Container>
-    );
-  }
-
-  return (
-    <Container>
-      <CameraView
-        onBarCodeRead={scanned ? undefined : handleBarCodeScanned}
-        captureAudio={false}
-      />
-      {scanned && (
-        <ScanButton
-          title="Tap to Scan Again"
-          onPress={() => setScanned(false)}
-        />
-      )}
-
-      <Modal isVisible={isModalVisible}>
-        <ModalContainer>
-          <ModalText>Model: {scooterData?.model}</ModalText>
-          <ModalText>Battery: {scooterData?.battery}</ModalText>
-          <ModalButton title="Confirm Rental" onPress={confirmRental} />
-          <ModalButton
-            title="Cancel"
-            onPress={() => setIsModalVisible(false)}
-          />
-        </ModalContainer>
-      </Modal>
-    </Container>
-  );
-};
-
-export default QRScanner;
+//#endregion

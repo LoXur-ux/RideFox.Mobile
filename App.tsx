@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
-import store from "./redux/Store";
-import NavigationApp from "./src/NavigationApp";
+import store from "./src/redux/Store";
+import NavigationApp from "./src/components/NavigationApp";
 
 const App: React.FC = () => {
   // TS Code

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/Store";
-import { setUser } from "../../redux/slices/userSlice";
-import { setPage } from "../../redux/slices/navigationSlice";
+import { RootState } from "../redux/Store";
+import { setUser } from "../redux/slices/userSlice";
+import { setPage } from "../redux/slices/navigationSlice";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import Logo from "../components/Logo";
 
@@ -23,12 +23,12 @@ const Login = () => {
         login: login,
         email: "test@test.ru",
         phone: "88005553535",
-        firstName: "Иван",
-        secondName: "Иванович",
-        lastName: "Иванов",
-        birthday: new Date(Date.UTC(2001, 12, 13)).toISOString(),
+        firstName: "Максим",
+        secondName: "Романович",
+        lastName: "Шумилов",
+        birthday: new Date(Date.UTC(2003, 1, 27)).toISOString(),
       })
-    ); //(loginUser({ username: login, password: password }));
+    );
     dispatch(setPage("qr"));
   };
 

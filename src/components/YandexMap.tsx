@@ -1,20 +1,30 @@
 import React from "react";
-import { YaMap, Marker } from "react-native-yamap";
+import { YaMap } from "react-native-yamap";
+import { yandexApiKey } from "../../settings.json";
+import styled from "styled-components/native";
+
+const YAMap = styled(YaMap)`
+  width: 100%;
+  height: 100%;
+`;
 
 const YandexMap = () => {
+  YaMap.init(yandexApiKey);
+  YaMap.setLocale("ru_RU");
+
+  const userIcon = require("../../assets/icons/map/navigation-cursor.svg");
+
   return (
-    <YaMap
-      showUserPosition={false}
-      rotateGesturesEnabled={false}
-      nightMode={true}
-      mapType={"vector"}
-      initialRegion={{
-        lat: 30,
-        lon: 30,
-        zoom: 7,
-        azimuth: 0,
-      }}
-    ></YaMap>
+    <YAMap
+      // initialRegion={{
+      //   lat: 58.604247,
+      //   lon: 49.598574,
+      //   zoom: 30,
+      // }}
+      showUserPosition={true}
+      followUser={true}
+      userLocationIcon={userIcon}
+    ></YAMap>
   );
 };
 

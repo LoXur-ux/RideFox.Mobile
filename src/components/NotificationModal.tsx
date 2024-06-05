@@ -3,7 +3,7 @@ import { Modal } from "react-native";
 import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import INotifications from "../../types/model/INotificationModel";
+import INotifications from "../types/model/INotificationModel";
 
 interface INotificationModal {
   visible: boolean;

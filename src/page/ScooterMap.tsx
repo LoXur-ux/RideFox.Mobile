@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/Store";
-import { clearSelection } from "../../redux/slices/scooterSlice";
-//import { YandexMapKit, YandexMapView } from "react-native-yandexmapkit";
-import { YandexApiKey } from "../../settings.json";
-import { View } from "react-native";
+import { RootState } from "../redux/Store";
+import { clearSelection } from "../redux/slices/scooterSlice";
 import YandexMap from "../components/YandexMap";
+
 // import {
 //   checkLocationPermission,
 //   requestLocationPermission,
@@ -70,7 +68,7 @@ const ScooterMap = () => {
   };
   return (
     <MapContainer>
-      {/* <YandexMap points={[]} /> */}
+      <YandexMap />
       <InfoContainer>
         {selectedScooter && (
           <>

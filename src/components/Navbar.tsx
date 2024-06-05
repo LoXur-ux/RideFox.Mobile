@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
-import INavButtonProp from "../../types/properties/INavButtonProp";
+import INavButtonProp from "../types/properties/INavButtonProp";
 import { useDispatch } from "react-redux";
-import { setPage } from "../../redux/slices/navigationSlice";
+import { setPage } from "../redux/slices/navigationSlice";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 
 const Navbar: React.FC = () => {
