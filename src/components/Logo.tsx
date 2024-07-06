@@ -14,7 +14,7 @@ const LogoImage = styled.Image`
 const Logo = () => {
   return (
     <LogoContainer>
-      <LogoImage source={require("../../assets/icons/logo-large.png")} />
+      <LogoImage source={require("../assets/icons/logo-large.png")} />
     </LogoContainer>
   );
 };

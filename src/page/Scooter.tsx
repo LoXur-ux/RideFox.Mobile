@@ -1,58 +1,54 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { FlatList } from "react-native";
-import styled from "styled-components/native";
 import { useDispatch } from "react-redux";
-import IScooterModel from "../types/model/IScooterModel";
+import styled from "styled-components/native";
+import { selectScooter } from "../redux/slices/scooterSlice";
 import ScooterStatus from "../types/enum/ScooterStatuses";
 import ScooterModal from "../components/ScooterModal";
-import { selectScooter } from "../redux/slices/scooterSlice";
-import { uri } from "./../../settings.json";
+import IScooterModel from "../types/model/IScooterModel";
 
 const scootersDef: IScooterModel[] = [
-  { id: "1", name: "Scooter 1", charge: 80, status: ScooterStatus.Free },
-  { id: "2", name: "Scooter 2", charge: 50, status: ScooterStatus.Rented },
-  { id: "3", name: "Scooter 3", charge: 30, status: ScooterStatus.Free },
-  // добавьте больше самокатов по необходимости
+  {
+    id: "1",
+    name: "Scooter 1",
+    charge: 83.1,
+    status: ScooterStatus.Available,
+  },
+  {
+    id: "2",
+    name: "Scooter 2",
+    charge: 30.9,
+    status: ScooterStatus.Available,
+  },
+  {
+    id: "3",
+    name: "Scooter 3",
+    charge: 44.5,
+    status: ScooterStatus.Available,
+  },
 ];
 
 const Scooter: React.FC = () => {
   const dispatch = useDispatch();
   const [scooters, setScooter] = useState<IScooterModel[]>([]);
-  useEffect(() => {
-    axios
-      .get<IScooterModel[]>(uri + "scooter/get-all")
-      .then((res) => {
-        console.log(res.data);
 
-        setScooter((prev) => (prev = res.data));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        if (scooters.length === 0) setScooter(scootersDef);
-      });
-    return () => {};
+  useEffect(() => {
+    setScooter(scootersDef);
   }, []);
 
   const openModal = (scooter: IScooterModel) => {
     dispatch(selectScooter(scooter));
   };
 
-  const freeScooters = scooters.filter(
-    (scooter) => scooter.status === ScooterStatus.Free
-  );
-
   return (
     <Container>
       <FlatList
-        data={freeScooters}
+        data={scooters}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <ScooterItem onPress={() => openModal(item)}>
             <ScooterName>{item.name}</ScooterName>
-            <ScooterStatusText>{item.status}</ScooterStatusText>
+            <ScooterStatusText>{ScooterStatus[item.status]}</ScooterStatusText>
           </ScooterItem>
         )}
       />

@@ -1,6 +1,5 @@
 {
   "yandexApiKey": "9d0892d6-01eb-4a2c-a0b4-9af97ae1908f",
-  "uri": "http://10.0.2.2:5000/api"
-  //"uriHttps": "https://10.0.2.2:7000/api"
-  //"serverURI": "https://6ac0-158-101-164-135.ngrok-free.app/api/"
+  "yandexApiJSHTTP": "e7625afb-eb1c-471d-8fa8-bd5728b3968b",
+  "uri": "http://10.0.2.2:5000/api/"
 }

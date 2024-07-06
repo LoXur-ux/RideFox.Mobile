@@ -5,10 +5,36 @@ import { RootState } from "../redux/Store";
 import { clearSelection } from "../redux/slices/scooterSlice";
 import YandexMap from "../components/YandexMap";
 
-// import {
-//   checkLocationPermission,
-//   requestLocationPermission,
-// } from "../../service/PermissionHelper";
+const ScooterMap = () => {
+  const dispatch = useDispatch();
+  const selectedScooter = useSelector(
+    (state: RootState) => state.scooter.selectedScooter
+  );
+
+  const finishTrip = () => {
+    dispatch(clearSelection());
+  };
+  return (
+    <MapContainer>
+      <YandexMap />
+      <InfoContainer>
+        {selectedScooter && (
+          <>
+            <ScooterName>{selectedScooter.Name}</ScooterName>
+            <InfoText>Скорость: 0 км/ч</InfoText>
+            <InfoText>Растояние: 0 км</InfoText>
+            <InfoText>Заряд: {selectedScooter.Charge}%</InfoText>
+            <FinishTripButton onPress={finishTrip}>
+              <ButtonText>Закончить поездку</ButtonText>
+            </FinishTripButton>
+          </>
+        )}
+      </InfoContainer>
+    </MapContainer>
+  );
+};
+
+//#region CSS
 
 const MapContainer = styled.View`
   flex: 1;
@@ -56,34 +82,6 @@ const ButtonText = styled.Text`
   font-weight: bold;
 `;
 
-const ScooterMap = () => {
-  const dispatch = useDispatch();
-  const selectedScooter = useSelector(
-    (state: RootState) => state.scooter.selectedScooter
-  );
-  const [gpsPermission, setGpsPermission] = useState(false);
-
-  const finishTrip = () => {
-    dispatch(clearSelection());
-  };
-  return (
-    <MapContainer>
-      <YandexMap />
-      <InfoContainer>
-        {selectedScooter && (
-          <>
-            <ScooterName>{selectedScooter.name}</ScooterName>
-            <InfoText>Скорость: 0 км/ч</InfoText>
-            <InfoText>Растояние: 0 км</InfoText>
-            <InfoText>Заряд: {selectedScooter.charge}%</InfoText>
-            <FinishTripButton onPress={finishTrip}>
-              <ButtonText>Закончить поездку</ButtonText>
-            </FinishTripButton>
-          </>
-        )}
-      </InfoContainer>
-    </MapContainer>
-  );
-};
+//#endregion
 
 export default ScooterMap;

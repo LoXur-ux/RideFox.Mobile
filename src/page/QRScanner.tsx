@@ -7,20 +7,6 @@ import IScooterModel from "../types/model/IScooterModel";
 
 const QRCodeScannerComponent = () => {
   const [scanned, setScanned] = useState(false);
-  useEffect(() => {
-    //requestCameraPermission();
-    // fetch("https://mysafeinfo.com/api/data?list=englishmonarchs&format=json")
-    //   .then((res) => console.log("Json: " + res.json))
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err))
-    //   .finally(() => console.log("finally"));
-    axios
-      .get<IScooterModel[]>(uri + "scooter/get-all")
-      .then((res) => console.log(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const requestCameraPermission = async () => {
     try {
@@ -54,13 +40,6 @@ const QRCodeScannerComponent = () => {
 
   return (
     <Container>
-      {/* <QRCodeScanner
-        onRead={handleBarCodeScanned}
-        showMarker={true}
-        customMarker={<Marker />}
-        reactivate={true}
-        reactivateTimeout={2000}
-      /> */}
       {scanned && (
         <Overlay>
           <OverlayText>

@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
 
   const buttons: INavButtonProp[] = [
     {
-      imageSource: require("../../assets/icons/navbar/Notifications.png"),
+      imageSource: require("../assets/icons/navbar/Notifications.png"),
       onPress: () => {
         dispatch(setPage("notification"));
         navigator.dispatch(CommonActions.navigate({ name: "notification" }));
@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
       selected: false,
     },
     {
-      imageSource: require("../../assets/icons/navbar/History.png"),
+      imageSource: require("../assets/icons/navbar/History.png"),
       onPress: () => {
         dispatch(setPage("history"));
         navigator.dispatch(CommonActions.navigate({ name: "history" }));
@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
       selected: false,
     },
     {
-      imageSource: require("../../assets/icons/navbar/QR.png"),
+      imageSource: require("../assets/icons/navbar/QR.png"),
       onPress: () => {
         dispatch(setPage("qr"));
         navigator.dispatch(CommonActions.navigate({ name: "scanner" }));
@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
       selected: false,
     },
     {
-      imageSource: require("../../assets/icons/navbar/Scooter.png"),
+      imageSource: require("../assets/icons/navbar/Scooter.png"),
       onPress: () => {
         dispatch(setPage("map"));
         navigator.dispatch(CommonActions.navigate({ name: "map" }));
@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
       selected: false,
     },
     {
-      imageSource: require("../../assets/icons/navbar/Profile.png"),
+      imageSource: require("../assets/icons/navbar/Profile.png"),
       onPress: () => {
         dispatch(setPage("profile"));
         navigator.dispatch(CommonActions.navigate({ name: "profile" }));
