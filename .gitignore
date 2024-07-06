@@ -17,6 +17,7 @@ web-build/
 *.mobileprovision
 android
 .android
+settings.json
 
 # Metro
 .metro-health-check*

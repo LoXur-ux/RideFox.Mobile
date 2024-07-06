@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components/native";
 import YaMap from "react-native-yamap";
-import Geolocation, { GeoPosition } from "react-native-geolocation-service";
-import { yandexApiKey } from "../../settings.json";
-import { PermissionsAndroid, Platform } from "react-native";
+import {
+  getCurrentPositionAsync,
+  LocationObject,
+  requestForegroundPermissionsAsync,
+} from "expo-location";
 
 const userIcon = require("../assets/icons/map/navigation-cursor.svg");
 
@@ -13,68 +15,44 @@ const YAMap = styled(YaMap)`
 `;
 
 const YandexMap: React.FC = () => {
-  console.log("start");
-  console.log();
-
-  // YaMap.setLocale("ru_RU");
-
-  const [location, setLocation] = useState<GeoPosition | null>(null);
-  const [hasLocationPermission, setHasLocationPermission] = useState(false);
+  const [location, setLocation] = useState<LocationObject | null>(null);
+  const [hasLocationPermission, setHasLocationPermission] = useState(true);
+  const mapRef = useRef<YaMap>();
 
   useEffect(() => {
-    console.log("useEffect");
-    requestLocationPermission();
-    getLocation();
-
-    return () => {};
-  }, []);
-
-  const requestLocationPermission = async () => {
-    console.log("requestLocationPermission");
-    if (Platform.OS === "android") {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-        {
-          title: "Разрешение на получение геоданных",
-          message: "Приложению требуется получить доступ к вашим геоданным",
-          buttonNeutral: "Позже",
-          buttonNegative: "Отмена",
-          buttonPositive: "OK",
+    if (location) return;
+    console.log("getLocation useEffect: ", location);
+    try {
+      (async () => {
+        let { granted } = await requestForegroundPermissionsAsync();
+        console.log("status: ", granted);
+        if (!granted) {
+          return;
+        } else {
+          setHasLocationPermission(true);
         }
-      );
-      setHasLocationPermission(granted === PermissionsAndroid.RESULTS.GRANTED);
-    } else {
-      setHasLocationPermission(true);
-    }
-  };
 
-  const getLocation = async () => {
-    console.log("getLocation");
-
-    if (hasLocationPermission) {
-      await Geolocation.getCurrentPosition(
-        (position) => {
-          console.log("location: ", position);
-          setLocation(position);
-        },
-        (error) => {
-          console.log("location error: ", error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-      );
+        let _location = await getCurrentPositionAsync({});
+        setLocation(_location);
+        console.log(_location);
+      })();
+    } catch (err) {
+      console.log(err);
     }
-  };
+  }, [hasLocationPermission]);
 
   return (
     <YAMap
-    // initialRegion={{
-    //   lat: location && location.coords ? location.coords.latitude : 0,
-    //   lon: location && location.coords ? location?.coords.longitude : 0,
-    //   zoom: 27,
-    // }}
-    //showUserPosition={true}
-    //followUser={true}
-    //userLocationIcon={userIcon}
+      style={{ width: "100%", height: "100%" }}
+      ref={mapRef}
+      initialRegion={{
+        lat: location ? location?.coords?.latitude : 58.604305,
+        lon: location ? location?.coords?.longitude : 49.665913,
+        zoom: 15,
+      }}
+      showUserPosition={false}
+      followUser={true}
+      userLocationIcon={userIcon}
     />
   );
 };
