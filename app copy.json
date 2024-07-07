@@ -9,18 +9,20 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "proxy": "https://localhost:7039",
     "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "NSCameraUsageDescription": "This app uses the camera to scan barcodes."
-      }
-    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["CAMERA", "FLASHLIGHT"]
+      "permissions": [
+        "CAMERA",
+        "INTERNET",
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.LoXur.RideFox.Mobile"
     }
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/Store";
+import { RootState } from "../redux/Store";
 import RegistrationStep1 from "../components/registerSteps/RegistrationStep1";
 import RegistrationStep2 from "../components/registerSteps/RegistrationStep2";
 import RegistrationStep3 from "../components/registerSteps/RegistrationStep3";

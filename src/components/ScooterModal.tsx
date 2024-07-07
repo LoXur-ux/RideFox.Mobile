@@ -4,12 +4,12 @@ import React from "react";
 import styled from "styled-components/native";
 import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/Store";
+import { RootState } from "../redux/Store";
 import {
   bookScooter,
   clearSelection,
   rentScooter,
-} from "../../redux/slices/scooterSlice";
+} from "../redux/slices/scooterSlice";
 
 const ModalContent = styled.View`
   background-color: #fff;

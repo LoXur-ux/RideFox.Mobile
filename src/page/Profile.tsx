@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components/native";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../redux/Store";
-import IUserModel from "../../types/model/IUserModel";
-import { logoutUser } from "../../redux/slices/userSlice";
+import { RootState } from "../redux/Store";
+import IUserModel from "../types/model/IUserModel";
+import { logoutUser } from "../redux/slices/userSlice";
 import Logo from "../components/Logo";
 
 const Container = styled.View`
@@ -42,6 +42,22 @@ const ButtonText = styled.Text`
   font-weight: bold;
 `;
 
+const StatButton = styled.TouchableOpacity`
+  background-color: #f9f9f9;
+  width: 80%;
+  height: 50px;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const StatButtonText = styled.Text`
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector(
@@ -65,6 +81,12 @@ const UserProfile = () => {
       <InfoText>Общее расстояние: {totalDistance.toFixed(2)} км</InfoText>
       <InfoText>Средняя скорость: {averageSpeed.toFixed(2)} км/ч</InfoText>
       <InfoText>Общее время в пути: {(totalTime / 60).toFixed(2)} ч</InfoText>
+      <Button onPress={() => {}}>
+        <ButtonText>Изменить свои данные</ButtonText>
+      </Button>
+      <StatButton onPress={handleLogout}>
+        <StatButtonText>Статистика</StatButtonText>
+      </StatButton>
       <Button onPress={handleLogout}>
         <ButtonText>Выйти</ButtonText>
       </Button>

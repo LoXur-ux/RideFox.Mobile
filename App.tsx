@@ -1,20 +1,33 @@
 import { StatusBar } from "expo-status-bar";
-import { styled } from "styled-components/native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Provider, useSelector } from "react-redux";
-import { View } from "react-native";
-import store, { RootState } from "./redux/Store";
-import Notifications from "./src/page/Notifications";
-import History from "./src/page/History";
-import QR from "./src/page/QR";
-import Map from "./src/page/Map";
-import Profile from "./src/page/Profile";
-import Navbar from "./src/components/Navbar";
-import NavigationApp from "./src/NavigationApp";
+import { Provider } from "react-redux";
+import store from "./src/redux/Store";
+import { YaMap } from "react-native-yamap";
+import NavigationApp from "./src/components/NavigationApp";
+import { yandexApiKey, yandexApiJSKey } from "./settings.json";
+import { useEffect, useState } from "react";
 
-export default function App() {
+const App: React.FC = () => {
+  const [wasYaMapInit, setWasYaMapInit] = useState(false);
   // TS Code
+
+  useEffect(() => {
+    console.log("App useEffect");
+    try {
+      if (!wasYaMapInit) {
+        console.log(
+          `Init YaMap with key: ${Object.keys({
+            yandexApiKey,
+          })} \'${yandexApiKey}\'`
+        );
+        YaMap.init(yandexApiKey);
+        YaMap.setLocale("ru_RU");
+        setWasYaMapInit(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return () => {};
+  }, []);
 
   // UI
   return (
@@ -23,4 +36,5 @@ export default function App() {
       <StatusBar style="auto" />
     </Provider>
   );
-}
+};
+export default App;

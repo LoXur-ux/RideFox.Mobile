@@ -1,17 +1,15 @@
-// src/RegistrationStep3.tsx
-
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/Store";
+import { RootState } from "../../redux/Store";
 import {
   previousStep,
   setVerificationCode,
-} from "../../../redux/slices/registrationSlice";
-import { setUser } from "../../../redux/slices/userSlice";
+} from "../../redux/slices/registrationSlice";
+import { setUser } from "../../redux/slices/userSlice";
 import Logo from "../Logo";
-import { api } from "../../../service/TempAPI";
-import { setPage } from "../../../redux/slices/navigationSlice";
+import { api } from "../../service/TempAPI";
+import { setPage } from "../../redux/slices/navigationSlice";
 
 const Container = styled.View`
   flex: 1;

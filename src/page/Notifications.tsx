@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import NotificationModal from "../components/NotificationModal";
-import INotifications from "../../types/model/INotificationModel";
+import INotifications from "../types/model/INotificationModel";
 
 const notifications = [
   {

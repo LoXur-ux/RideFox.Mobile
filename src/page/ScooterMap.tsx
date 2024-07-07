@@ -1,9 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/Store";
-import { clearSelection } from "../../redux/slices/scooterSlice";
-import { Map, YMaps } from "@pbe/react-yandex-maps";
+import { RootState } from "../redux/Store";
+import { clearSelection } from "../redux/slices/scooterSlice";
+import YandexMap from "../components/YandexMap";
+
+const ScooterMap = () => {
+  const dispatch = useDispatch();
+  const selectedScooter = useSelector(
+    (state: RootState) => state.scooter.selectedScooter
+  );
+
+  const finishTrip = () => {
+    dispatch(clearSelection());
+  };
+  return (
+    <MapContainer>
+      <YandexMap />
+      <InfoContainer>
+        {selectedScooter && (
+          <>
+            <ScooterName>{selectedScooter.Name}</ScooterName>
+            <InfoText>Скорость: 0 км/ч</InfoText>
+            <InfoText>Растояние: 0 км</InfoText>
+            <InfoText>Заряд: {selectedScooter.Charge}%</InfoText>
+            <FinishTripButton onPress={finishTrip}>
+              <ButtonText>Закончить поездку</ButtonText>
+            </FinishTripButton>
+          </>
+        )}
+      </InfoContainer>
+    </MapContainer>
+  );
+};
+
+//#region CSS
 
 const MapContainer = styled.View`
   flex: 1;
@@ -51,36 +82,6 @@ const ButtonText = styled.Text`
   font-weight: bold;
 `;
 
-const ScooterMap = () => {
-  const dispatch = useDispatch();
-  const selectedScooter = useSelector(
-    (state: RootState) => state.scooter.selectedScooter
-  );
-
-  const finishTrip = () => {
-    dispatch(clearSelection());
-  };
-
-  return (
-    <MapContainer>
-      <YMaps>
-        <Map defaultState={{ center: [55.751574, 37.573856], zoom: 9 }} />
-      </YMaps>
-      <InfoContainer>
-        {selectedScooter && (
-          <>
-            <ScooterName>{selectedScooter.name}</ScooterName>
-            <InfoText>Скорость: 0 км/ч</InfoText>
-            <InfoText>Растояние: 0 км</InfoText>
-            <InfoText>Заряд: {selectedScooter.charge}%</InfoText>
-            <FinishTripButton onPress={finishTrip}>
-              <ButtonText>Закончить поездку</ButtonText>
-            </FinishTripButton>
-          </>
-        )}
-      </InfoContainer>
-    </MapContainer>
-  );
-};
+//#endregion
 
 export default ScooterMap;
