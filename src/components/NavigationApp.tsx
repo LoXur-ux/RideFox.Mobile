@@ -14,6 +14,7 @@ import ScooterMap from "../page/ScooterMap";
 import Login from "../page/Login";
 import Registration from "../page/Registration";
 import { View } from "react-native";
+import Stats from "../page/Stats";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,7 +46,7 @@ const NavigationApp: React.FC = () => {
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="scanner"
+              name="qr"
               component={QRScanner}
             />
             <Stack.Screen
@@ -57,6 +58,11 @@ const NavigationApp: React.FC = () => {
               options={{ headerShown: false }}
               name="profile"
               component={Profile}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="stats"
+              component={Stats}
             />
           </Stack.Navigator>
         ) : (
@@ -83,7 +89,7 @@ const NavigationApp: React.FC = () => {
 const Container = styled.View`
   height: 100%;
   width: 100%;
-  padding-top: 24px;
+  padding-top: 9%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -5,30 +5,7 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import NotificationModal from "../components/NotificationModal";
 import INotifications from "../types/model/INotificationModel";
-
-const notifications = [
-  {
-    id: "1",
-    title: "Notification 1",
-    shortContent: "This is the short content of the first notification.",
-    fullContent: "This is the full content of the first notification.",
-    date: "2024-05-20T10:00:00.000Z",
-  },
-  {
-    id: "2",
-    title: "Notification 2",
-    shortContent: "This is the short content of the second notification.",
-    fullContent: "This is the full content of the second notification.",
-    date: "2024-05-21T11:00:00.000Z",
-  },
-  {
-    id: "3",
-    title: "Notification 3",
-    shortContent: "This is the short content of the third notification.",
-    fullContent: "This is the full content of the third notification.",
-    date: "2024-05-22T12:00:00.000Z",
-  },
-];
+import notificationsData from "../types/data/Notifications";
 
 interface INotificationCard {
   notification: INotifications;
@@ -79,8 +56,9 @@ const Notifications: React.FC = () => {
 
   return (
     <Container>
+      <Header>Ваши уведомления</Header>
       <FlatList
-        data={notifications}
+        data={notificationsData}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <NotificationCard
@@ -103,12 +81,18 @@ export default Notifications;
 //#region CSS
 const Container = styled.View`
   flex: 1;
-  padding: 16px;
   background-color: #f9f9f9;
 `;
-
+const Header = styled.Text`
+  margin: 16px;
+  font-size: 28px;
+  color: black;
+  font-weight: bold;
+`;
 const Card = styled.TouchableOpacity`
   background-color: #ffa42d;
+  margin-left: 12px;
+  margin-right: 12px;
   padding: 16px;
   margin-vertical: 8px;
   border-radius: 8px;

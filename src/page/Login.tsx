@@ -21,12 +21,12 @@ const Login = () => {
       setUser({
         id: "87FDBC86-2F1B-4A08-9B76-FF5B204CDC2B",
         login: login,
-        email: "test@test.ru",
+        email: "admin@ridefox.ru",
         phone: "88005553535",
-        firstName: "Максим",
-        secondName: "Романович",
-        lastName: "Шумилов",
-        birthday: new Date(Date.UTC(2003, 1, 27)).toISOString(),
+        firstName: "Данил",
+        secondName: "Александровчи",
+        lastName: "Панишев",
+        birthday: new Date(Date.UTC(2001, 12, 13)).toISOString(),
       })
     );
     dispatch(setPage("qr"));

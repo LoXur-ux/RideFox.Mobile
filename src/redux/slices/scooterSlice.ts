@@ -1,10 +1,8 @@
-// src/scooterSlice.ts
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import IScooterModel from "../../types/model/IScooterModel";
 
 interface ScooterState {
-  selectedScooter: ScooterVm | null;
+  selectedScooter: IScooterModel | null;
 }
 
 const initialState: ScooterState = {
@@ -15,7 +13,7 @@ const scooterSlice = createSlice({
   name: "scooter",
   initialState,
   reducers: {
-    selectScooter: (state, action: PayloadAction<ScooterVm>) => {
+    selectScooter: (state, action: PayloadAction<IScooterModel>) => {
       state.selectedScooter = action.payload;
     },
     clearSelection: (state) => {

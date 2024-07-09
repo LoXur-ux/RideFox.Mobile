@@ -37,10 +37,11 @@ const NotificationModal: React.FC<INotificationModal> = (props) => {
       <Container>
         <ModalView>
           <Title>{props.notification.title}</Title>
-          <Content>{props.notification.fullContent}</Content>
           <DateText>
             {formattedDate} в {formattedTime}
           </DateText>
+          <Content>{props.notification.fullContent}</Content>
+
           <CloseButton onPress={props.onClose}>
             <CloseButtonText>Закрыть</CloseButtonText>
           </CloseButton>
@@ -61,32 +62,33 @@ const Container = styled.View`
 `;
 
 const ModalView = styled.View`
+  width: 92%;
   background-color: white;
   border-radius: 20px;
-  padding: 35px;
-  align-items: center;
+  padding: 32px 16px;
   elevation: 5;
 `;
 
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const Content = styled.Text`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;
 
 const DateText = styled.Text`
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const CloseButton = styled.TouchableOpacity`
   background-color: #ffa42d;
-  padding: 10px 20px;
+  align-items: center;
+  padding: 8px 16px;
   border-radius: 5px;
 `;
 

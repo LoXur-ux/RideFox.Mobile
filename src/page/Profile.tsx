@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/Store";
 import IUserModel from "../types/model/IUserModel";
 import { logoutUser } from "../redux/slices/userSlice";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Logo from "../components/Logo";
+import { setPage } from "../redux/slices/navigationSlice";
 
 const Container = styled.View`
   flex: 1;
@@ -64,7 +66,7 @@ const UserProfile = () => {
     (state: RootState) => state.user.currentUser
   ) as IUserModel;
   const trips = useSelector((state: RootState) => state.trips.trips);
-
+  const navigator = useNavigation();
   const totalDistance = trips.reduce((sum, trip) => sum + trip.distance, 0);
   const totalTime = trips.reduce((sum, trip) => sum + trip.duration, 0);
   const averageSpeed =
@@ -73,18 +75,18 @@ const UserProfile = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
-
+  const handleStats = () => {
+    dispatch(setPage("stats"));
+    navigator.dispatch(CommonActions.navigate({ name: "stats" }));
+  };
   return (
     <Container>
       <Logo />
       <WelcomeText>Привет, {user.firstName}</WelcomeText>
-      <InfoText>Общее расстояние: {totalDistance.toFixed(2)} км</InfoText>
-      <InfoText>Средняя скорость: {averageSpeed.toFixed(2)} км/ч</InfoText>
-      <InfoText>Общее время в пути: {(totalTime / 60).toFixed(2)} ч</InfoText>
       <Button onPress={() => {}}>
         <ButtonText>Изменить свои данные</ButtonText>
       </Button>
-      <StatButton onPress={handleLogout}>
+      <StatButton onPress={handleStats}>
         <StatButtonText>Статистика</StatButtonText>
       </StatButton>
       <Button onPress={handleLogout}>

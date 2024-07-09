@@ -4,33 +4,7 @@ import styled from "styled-components/native";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import HistoryModal from "./../components/HistoryModal";
-
-const trips: IHistoryModel[] = [
-  {
-    id: "1",
-    title: "Поездка 1",
-    content: "Полное описание первой поездки.",
-    date: "2024-05-20T10:00:00.000Z",
-    cost: 200,
-    distance: 5,
-  },
-  {
-    id: "2",
-    title: "Поездка 2",
-    content: "Полное описание второй поездки.",
-    date: "2024-05-21T11:00:00.000Z",
-    cost: 300,
-    distance: 7,
-  },
-  {
-    id: "3",
-    title: "Поездка 3",
-    content: "Полное описание третьей поездки.",
-    date: "2024-05-22T12:00:00.000Z",
-    cost: 150,
-    distance: 3,
-  },
-];
+import tripsData from "../types/data/Trips";
 
 interface IHistCardProps {
   history: IHistoryModel;
@@ -63,7 +37,7 @@ const History: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    setHistories(trips);
+    setHistories(tripsData);
   }, []);
 
   const handlePress = (hist: IHistoryModel) => {
@@ -78,6 +52,7 @@ const History: React.FC = () => {
 
   return (
     <Container>
+      <Header>Ваша история поездок</Header>
       <FlatList
         data={histories}
         keyExtractor={(item) => item.id}
@@ -99,12 +74,20 @@ export default History;
 //#region CSS
 const Container = styled.View`
   flex: 1;
-  padding: 16px;
   background-color: #f9f9f9;
+`;
+
+const Header = styled.Text`
+  margin: 16px;
+  font-size: 28px;
+  color: black;
+  font-weight: bold;
 `;
 
 const Card = styled.TouchableOpacity`
   background-color: #ffa42d;
+  margin-left: 12px;
+  margin-right: 12px;
   padding: 16px;
   margin-vertical: 8px;
   border-radius: 8px;

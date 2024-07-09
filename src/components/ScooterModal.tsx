@@ -1,81 +1,110 @@
-// src/ScooterModal.tsx
-
 import React from "react";
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import styled from "styled-components/native";
-import Modal from "react-native-modal";
-import { useSelector, useDispatch } from "react-redux";
+import IScooterModel from "../types/model/IScooterModel";
+import { useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
-import {
-  bookScooter,
-  clearSelection,
-  rentScooter,
-} from "../redux/slices/scooterSlice";
 
-const ModalContent = styled.View`
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  align-items: center;
-`;
+interface ScooterModalProps {
+  visible: boolean;
+  scooter: IScooterModel | null;
+  onClose: () => void;
+  onRent: () => void;
+}
 
-const ModalText = styled.Text`
-  font-size: 16px;
-  margin-bottom: 10px;
-`;
-
-const Button = styled.TouchableOpacity<{ primary?: boolean }>`
-  background-color: ${(props) => (props.primary ? "#007bff" : "#6c757d")};
-  padding: 10px 20px;
-  margin-top: 10px;
-  border-radius: 5px;
-  align-items: center;
-  width: 100%;
-`;
-
-const ButtonText = styled.Text`
-  color: #fff;
-  font-size: 16px;
-`;
-
-const ScooterModal = () => {
-  const dispatch = useDispatch();
+const ScooterModal: React.FC<ScooterModalProps> = ({
+  visible,
+  scooter,
+  onClose,
+  onRent,
+}) => {
   const selectedScooter = useSelector(
     (state: RootState) => state.scooter.selectedScooter
   );
-  const isModalVisible = selectedScooter !== null;
-
-  const closeModal = () => {
-    dispatch(clearSelection());
-  };
-
-  const handleBookScooter = () => {
-    dispatch(bookScooter(selectedScooter));
-    closeModal();
-  };
-
-  const handleRentScooter = () => {
-    dispatch(rentScooter(selectedScooter));
-    closeModal();
-  };
 
   return (
-    <Modal isVisible={isModalVisible} onBackdropPress={closeModal}>
-      <ModalContent>
-        {selectedScooter && (
-          <>
-            <ModalText>Заряд: {selectedScooter.charge}%</ModalText>
-            <ModalText>Статус: {selectedScooter.status}</ModalText>
-            <Button primary onPress={handleBookScooter}>
-              <ButtonText>Забронировать</ButtonText>
-            </Button>
-            <Button onPress={handleRentScooter}>
-              <ButtonText>Арендовать</ButtonText>
-            </Button>
-          </>
-        )}
-      </ModalContent>
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <ModalContainer>
+        <ModalContent>
+          {selectedScooter ? (
+            scooter && (
+              <>
+                <Text style={styles.modalTitle}>Самокат №{scooter.name}</Text>
+                <Text style={styles.modalText}>
+                  Заряд батареии: {scooter.charge}%
+                </Text>
+                <Text style={styles.modalText}>Стартовая цена: 60₽</Text>
+                <TouchableOpacity style={styles.rentButton} onPress={onRent}>
+                  <Text style={styles.buttonText}>Арендовать</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonCancle} onPress={onClose}>
+                  <Text style={styles.buttonCancleText}>Отмена</Text>
+                </TouchableOpacity>
+              </>
+            )
+          ) : (
+            <Text style={styles.modalText}>
+              Что-то пошло не так...
+              <br />
+              Попробуйте снова
+            </Text>
+          )}
+        </ModalContent>
+      </ModalContainer>
     </Modal>
   );
 };
+
+const ModalContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+`;
+
+const ModalContent = styled.View`
+  width: 80%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  align-items: center;
+`;
+
+const styles = StyleSheet.create({
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  rentButton: {
+    marginTop: 16,
+    backgroundColor: "#ffa42d",
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonCancle: {
+    marginTop: 16,
+    backgroundColor: "#ffffff",
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#black",
+    fontSize: 16,
+  },
+  buttonCancleText: {
+    color: "black",
+    fontSize: 16,
+  },
+});
 
 export default ScooterModal;

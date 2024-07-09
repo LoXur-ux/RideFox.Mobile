@@ -1,14 +1,15 @@
+import { useEffect, useRef, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import store from "./src/redux/Store";
 import { YaMap } from "react-native-yamap";
 import NavigationApp from "./src/components/NavigationApp";
-import { yandexApiKey, yandexApiJSKey } from "./settings.json";
-import { useEffect, useState } from "react";
+import { yandexApiKey } from "./settings.json";
+import { View } from "react-native";
 
 const App: React.FC = () => {
-  const [wasYaMapInit, setWasYaMapInit] = useState(false);
   // TS Code
+  const [wasYaMapInit, setWasYaMapInit] = useState(false);
 
   useEffect(() => {
     console.log("App useEffect");
@@ -32,9 +33,10 @@ const App: React.FC = () => {
   // UI
   return (
     <Provider store={store}>
+      <StatusBar animated={true}  />
       <NavigationApp />
-      <StatusBar style="auto" />
     </Provider>
   );
 };
+
 export default App;

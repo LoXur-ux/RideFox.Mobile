@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
       imageSource: require("../assets/icons/navbar/QR.png"),
       onPress: () => {
         dispatch(setPage("qr"));
-        navigator.dispatch(CommonActions.navigate({ name: "scanner" }));
+        navigator.dispatch(CommonActions.navigate({ name: "qr" }));
       },
       selected: false,
     },

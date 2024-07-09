@@ -33,11 +33,11 @@ const HistoryModal: React.FC<IHistModal> = (props) => {
         <ModalView>
           <Title>{props.hist.title}</Title>
           <Content>{props.hist.content}</Content>
-          <DateText>
+          <Content>
             {formattedDate} в {formattedTime}
-          </DateText>
-          <CostText>Стоимость: {props.hist.cost}₽</CostText>
-          <DistanceText>Расстояние: {props.hist.distance} км</DistanceText>
+          </Content>
+          <Content>Стоимость: {props.hist.cost}₽</Content>
+          <Content>Расстояние: {props.hist.distance} км</Content>
           <CloseButton onPress={props.onClose}>
             <CloseButtonText>Закрыть</CloseButtonText>
           </CloseButton>
@@ -59,41 +59,32 @@ const Container = styled.View`
 
 const ModalView = styled.View`
   background-color: white;
+  width: 92%;
   border-radius: 20px;
-  padding: 35px;
-  align-items: center;
+  padding: 32px 16px;
   elevation: 5;
 `;
 
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const Content = styled.Text`
   font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;
 
-const DateText = styled.Text`
+const TextContent = styled.Text`
   font-size: 14px;
-  margin-bottom: 20px;
-`;
-
-const CostText = styled.Text`
-  font-size: 16px;
-  margin-bottom: 20px;
-`;
-
-const DistanceText = styled.Text`
-  font-size: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 `;
 
 const CloseButton = styled.TouchableOpacity`
   background-color: #ffa42d;
-  padding: 10px 20px;
+  align-items: center;
+  padding: 8px 16px;
   border-radius: 5px;
 `;
 

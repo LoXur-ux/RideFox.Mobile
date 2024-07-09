@@ -4,36 +4,15 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
 import { selectScooter } from "../redux/slices/scooterSlice";
 import ScooterStatus from "../types/enum/ScooterStatuses";
-import ScooterModal from "../components/ScooterModal";
 import IScooterModel from "../types/model/IScooterModel";
-
-const scootersDef: IScooterModel[] = [
-  {
-    id: "1",
-    name: "Scooter 1",
-    charge: 83.1,
-    status: ScooterStatus.Available,
-  },
-  {
-    id: "2",
-    name: "Scooter 2",
-    charge: 30.9,
-    status: ScooterStatus.Available,
-  },
-  {
-    id: "3",
-    name: "Scooter 3",
-    charge: 44.5,
-    status: ScooterStatus.Available,
-  },
-];
+import scootersData from "../types/data/Scooters";
 
 const Scooter: React.FC = () => {
   const dispatch = useDispatch();
   const [scooters, setScooter] = useState<IScooterModel[]>([]);
 
   useEffect(() => {
-    setScooter(scootersDef);
+    setScooter(scootersData);
   }, []);
 
   const openModal = (scooter: IScooterModel) => {
@@ -52,7 +31,6 @@ const Scooter: React.FC = () => {
           </ScooterItem>
         )}
       />
-      <ScooterModal />
     </Container>
   );
 };
