@@ -5,6 +5,8 @@ interface IScooterModel {
   name: string;
   charge: number;
   status: ScooterStatus;
+  lat: number;
+  lon: number;
 }
 
 export default IScooterModel;

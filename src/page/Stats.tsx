@@ -11,8 +11,6 @@ import { useDispatch } from "react-redux";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { setPage } from "../redux/slices/navigationSlice";
 
-const { width } = Dimensions.get("window");
-
 const Stats: React.FC = () => {
   const dispatch = useDispatch();
   const navigator = useNavigation();
@@ -44,7 +42,7 @@ const Stats: React.FC = () => {
             </StatBox>
           </StatsContainer>
         </ScrollView>
-        {/* <CloseButton onPress={onClose} >
+        {/* <CloseButton onPress={onClose}>
           <ButtonText>Вернуться</ButtonText>
         </CloseButton> */}
       </StatsMainContainer>

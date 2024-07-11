@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Text, Dimensions, TouchableOpacity, Image, View } from "react-native";
-import { Camera, CameraView } from "expo-camera";
+//import { Camera, CameraView } from "expo-camera";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/Store";
 import { selectScooter } from "../redux/slices/scooterSlice";
 import IScooterModel from "../types/model/IScooterModel";
 import scootersData from "../types/data/Scooters";
@@ -26,12 +25,12 @@ const QRCodeScannerComponent = () => {
 
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-  useEffect(() => {
-    (async () => {
-      const { granted } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(granted);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const { granted } = await Camera.requestCameraPermissionsAsync();
+  //     setHasPermission(granted);
+  //   })();
+  // }, []);
 
   const handleBarCodeScanned = async ({ type, data }) => {
     if (!scanned) {
@@ -82,7 +81,7 @@ const QRCodeScannerComponent = () => {
     <MainContainer>
       <Header>Отсканируйте QR-код на самокате</Header>
       <Container>
-        <CameraContainer
+        {/* <CameraContainer
           facing="back"
           barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
           onBarcodeScanned={handleBarCodeScanned}
@@ -92,7 +91,7 @@ const QRCodeScannerComponent = () => {
             alignSelf: "center",
           }}
           enableTorch={torchOn}
-        />
+        /> */}
         <ButtonContainer>
           <TorchButton onPress={() => setTorchOn(!torchOn)}>
             {torchOn ? (
@@ -131,11 +130,11 @@ const Container = styled.View`
   align-items: center;
 `;
 
-const CameraContainer = styled(CameraView)`
-  justify-content: center;
-  align-items: center;
-  margin-top: 60px;
-`;
+// const CameraContainer = styled(CameraView)`
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 60px;
+// `;
 
 const ButtonContainer = styled.View`
   position: absolute;

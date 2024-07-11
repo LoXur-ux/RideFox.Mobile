@@ -5,6 +5,8 @@ import userReducer from "./slices/userSlice";
 import registrationReducer from "./slices/registrationSlice";
 import tripsReducer from "./slices/tripsSlice";
 import currentTripReducer from "./slices/currentTripSlice";
+import walletSlice from "./slices/walletSlice";
+import subscribeSlice from "./slices/subscribeSlice";
 
 const rootReducer = combineReducers({
   registration: registrationReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
   navigation: navigationReducer,
   trips: tripsReducer,
   currentTrip: currentTripReducer,
+  wallet: walletSlice,
+  subscribe: subscribeSlice,
 });
 
 export default rootReducer;

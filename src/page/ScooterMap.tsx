@@ -1,29 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
 import { clearSelection } from "../redux/slices/scooterSlice";
 import YandexMap from "../components/YandexMap";
+import { View } from "react-native";
+import { subtractionWallet } from "../redux/slices/walletSlice";
 
 const ScooterMap = () => {
   const dispatch = useDispatch();
   const selectedScooter = useSelector(
     (state: RootState) => state.scooter.selectedScooter
   );
+  const subscribe = useSelector((state: RootState) => state.subscribe);
+
+  const [cost, setCost] = useState(subscribe.startPrice);
+
+  useEffect(() => {
+    dispatch(subtractionWallet(subscribe.startPrice));
+
+    const interval = setInterval(() => {
+      setCost((prev) => prev + subscribe.priceMinute);
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const finishTrip = () => {
+    dispatch(subtractionWallet(cost - subscribe.startPrice));
     dispatch(clearSelection());
   };
+
   return (
     <MapContainer>
       <YandexMap />
       <InfoContainer>
         {selectedScooter && (
           <>
-            <ScooterName>{selectedScooter.Name}</ScooterName>
-            <InfoText>Скорость: 0 км/ч</InfoText>
-            <InfoText>Растояние: 0 км</InfoText>
-            <InfoText>Заряд: {selectedScooter.Charge}%</InfoText>
+            <InfoDataContainer>
+              <View>
+                <ScooterName>Самокат №{selectedScooter.name}</ScooterName>
+                <InfoText>Скорость: 0 км/ч</InfoText>
+                <InfoText>Растояние: 0 км</InfoText>
+                <InfoText>Заряд: {selectedScooter.charge}%</InfoText>
+              </View>
+              <View>
+                <Cost>{cost}₽</Cost>
+              </View>
+            </InfoDataContainer>
             <FinishTripButton onPress={finishTrip}>
               <ButtonText>Закончить поездку</ButtonText>
             </FinishTripButton>
@@ -57,6 +81,21 @@ const InfoContainer = styled.View`
   elevation: 2;
 `;
 
+const InfoDataContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Cost = styled.Text`
+  flex: 1;
+  flex-direction: column;
+  font-size: 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+`;
+
 const ScooterName = styled.Text`
   font-size: 18px;
   color: #333;
@@ -77,7 +116,7 @@ const FinishTripButton = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text`
-  color: #f9f9f9;
+  color: black;
   font-size: 16px;
   font-weight: bold;
 `;

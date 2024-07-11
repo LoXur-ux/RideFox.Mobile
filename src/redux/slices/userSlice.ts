@@ -51,6 +51,9 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    updateUser: (state, action: PayloadAction<IUserModel>) => {
+      state.currentUser = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -70,6 +73,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, logoutUser, loginStart, loginSuccess, loginFailure } =
-  userSlice.actions;
+export const {
+  setUser,
+  logoutUser,
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  updateUser,
+} = userSlice.actions;
 export default userSlice.reducer;

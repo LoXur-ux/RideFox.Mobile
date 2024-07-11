@@ -8,6 +8,57 @@ import { CommonActions, useNavigation } from "@react-navigation/native";
 import Logo from "../components/Logo";
 import { setPage } from "../redux/slices/navigationSlice";
 
+const UserProfile = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user.currentUser);
+  const trips = useSelector((state: RootState) => state.trips.trips);
+  const wallet = useSelector((state: RootState) => state.wallet);
+  const navigator = useNavigation();
+  const totalDistance = trips.reduce((sum, trip) => sum + trip.distance, 0);
+  const totalTime = trips.reduce((sum, trip) => sum + trip.duration, 0);
+  const averageSpeed =
+    totalDistance > 0 && totalTime > 0 ? totalDistance / (totalTime / 60) : 0;
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
+
+  const handleStats = () => {
+    dispatch(setPage("stats"));
+    navigator.dispatch(CommonActions.navigate({ name: "stats" }));
+  };
+  const handleSubscribe = () => {
+    dispatch(setPage("subscibe"));
+    navigator.dispatch(CommonActions.navigate({ name: "subscibe" }));
+  };
+
+  const handleChangeUserInfo = () => {
+    dispatch(setPage("updateUser"));
+    navigator.dispatch(CommonActions.navigate({ name: "updateUser" }));
+  };
+
+  return (
+    <Container>
+      <Logo />
+      <WelcomeText>Привет, {user.firstName}</WelcomeText>
+      <Button onPress={() => {}}>
+        <ButtonText>Кошелек: {wallet.amount}₽</ButtonText>
+      </Button>
+      <Button onPress={handleStats}>
+        <ButtonText>Статистика</ButtonText>
+      </Button>
+      <Button onPress={handleChangeUserInfo}>
+        <ButtonText>Изменить свои данные</ButtonText>
+      </Button>
+      <Button onPress={handleSubscribe}>
+        <ButtonText>Изменить подписку</ButtonText>
+      </Button>
+      <StatButton onPress={handleLogout}>
+        <StatButtonText>Выйти из аккаунта</StatButtonText>
+      </StatButton>
+    </Container>
+  );
+};
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -22,12 +73,6 @@ const WelcomeText = styled.Text`
   margin-bottom: 20px;
 `;
 
-const InfoText = styled.Text`
-  font-size: 18px;
-  color: #2e2e2e;
-  margin-bottom: 10px;
-`;
-
 const Button = styled.TouchableOpacity`
   background-color: #ffa42d;
   width: 80%;
@@ -39,7 +84,7 @@ const Button = styled.TouchableOpacity`
 `;
 
 const ButtonText = styled.Text`
-  color: #ffffff;
+  color: black;
   font-size: 18px;
   font-weight: bold;
 `;
@@ -59,41 +104,5 @@ const StatButtonText = styled.Text`
   font-size: 18px;
   font-weight: bold;
 `;
-
-const UserProfile = () => {
-  const dispatch = useDispatch();
-  const user = useSelector(
-    (state: RootState) => state.user.currentUser
-  ) as IUserModel;
-  const trips = useSelector((state: RootState) => state.trips.trips);
-  const navigator = useNavigation();
-  const totalDistance = trips.reduce((sum, trip) => sum + trip.distance, 0);
-  const totalTime = trips.reduce((sum, trip) => sum + trip.duration, 0);
-  const averageSpeed =
-    totalDistance > 0 && totalTime > 0 ? totalDistance / (totalTime / 60) : 0;
-
-  const handleLogout = () => {
-    dispatch(logoutUser());
-  };
-  const handleStats = () => {
-    dispatch(setPage("stats"));
-    navigator.dispatch(CommonActions.navigate({ name: "stats" }));
-  };
-  return (
-    <Container>
-      <Logo />
-      <WelcomeText>Привет, {user.firstName}</WelcomeText>
-      <Button onPress={() => {}}>
-        <ButtonText>Изменить свои данные</ButtonText>
-      </Button>
-      <StatButton onPress={handleStats}>
-        <StatButtonText>Статистика</StatButtonText>
-      </StatButton>
-      <Button onPress={handleLogout}>
-        <ButtonText>Выйти</ButtonText>
-      </Button>
-    </Container>
-  );
-};
 
 export default UserProfile;

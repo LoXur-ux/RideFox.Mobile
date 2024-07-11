@@ -15,6 +15,9 @@ import Login from "../page/Login";
 import Registration from "../page/Registration";
 import { View } from "react-native";
 import Stats from "../page/Stats";
+import ChangeUserInfo from "../page/ChangeUserInfo";
+import subscriptions from "../types/data/Subsciprions";
+import Subscribe from "../page/Subscriptions";
 
 const Stack = createNativeStackNavigator();
 
@@ -63,6 +66,16 @@ const NavigationApp: React.FC = () => {
               options={{ headerShown: false }}
               name="stats"
               component={Stats}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="updateUser"
+              component={ChangeUserInfo}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="subscibe"
+              component={Subscribe}
             />
           </Stack.Navigator>
         ) : (
